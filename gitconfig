@@ -1,0 +1,7 @@
+[user]
+  name = Jed Schneider
+  email = jed.schneider@gmail.com
+  username = jedschneider
+
+[include]
+  path = ~/dotfiles/gitconfig

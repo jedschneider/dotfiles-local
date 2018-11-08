@@ -1,1 +1,6 @@
 Plug 'flazz/vim-colorschemes'
+" Silver Searcher Integration
+Plug 'rking/ag.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'hashivim/vim-terraform'
+Plug 'mattn/emmet-vim'
