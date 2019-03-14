@@ -2,6 +2,9 @@
   name = Jed Schneider
   email = jed.schneider@gmail.com
   username = jedschneider
+  signingkey = 16316006642CDC69
 
 [include]
   path = ~/dotfiles/gitconfig
+[commit]
+  gpgsign = true

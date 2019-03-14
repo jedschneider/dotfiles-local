@@ -1,1 +1,6 @@
 map <C-n> :NERDTreeToggle<CR>
+function! TrimWhiteSpace()
+    %s/\s\+$//e
+endfunction
+autocmd BufWritePre     * :call TrimWhiteSpace()
+let g:mix_format_on_save = 1
