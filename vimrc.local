@@ -3,4 +3,28 @@ function! TrimWhiteSpace()
     %s/\s\+$//e
 endfunction
 autocmd BufWritePre     * :call TrimWhiteSpace()
-let g:mix_format_on_save = 1
+
+let g:ale_pattern_options = {
+                        \  '\.min\.js$': {'ale_linters': [], 'ale_fixers': []},
+                        \  '\.min\.css$': {'ale_linters': [], 'ale_fixers': []},
+                        \}
+
+let g:ale_fixers = {
+      \   'typescript': ['prettier'],
+      \   'typescript.tsx': ['prettier'],
+      \   'javascript': ['prettier'],
+      \   'javascript.jsx': ['prettier'],
+      \   'json': ['prettier'],
+      \   'scss': ['prettier'],
+      \   'bash': ['shfmt'],
+      \   'zsh': ['shfmt'],
+      \   'elixir': ['mix_format'],
+      \   'ruby': ['rubocop'],
+      \   'rust': ['rustfmt'],
+      \   'elm': ['elm-format'],
+      \}
+
+let g:ale_sh_shfmt_options = '-i 2 -ci'
+
+let g:ale_fix_on_save = 1
+set spell spelllang=en_us
