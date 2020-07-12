@@ -2,12 +2,14 @@
 	name = Jed Schneider
 	email = jed.schneider@gmail.com
   username = jedschneider
-  signingkey = 16316006642CDC69
+  signingKey = 0x319BB903D0D7A132
 
-[include]
-  path = ~/dotfiles/gitconfig
 [commit]
   gpgsign = true
+[push]
+  spgSign = if-asked
+[log]
+  showSignature = true
 [filter "lfs"]
 	process = git-lfs filter-process
 	required = true
