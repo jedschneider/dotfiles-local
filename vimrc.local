@@ -4,10 +4,27 @@ function! TrimWhiteSpace()
 endfunction
 autocmd BufWritePre     * :call TrimWhiteSpace()
 
+colorscheme solarized
+
 let g:ale_pattern_options = {
                         \  '\.min\.js$': {'ale_linters': [], 'ale_fixers': []},
                         \  '\.min\.css$': {'ale_linters': [], 'ale_fixers': []},
                         \}
+
+let g:ale_linters = {
+      \   'typescript': ['prettier'],
+      \   'typescript.tsx': ['prettier'],
+      \   'javascript': ['prettier'],
+      \   'javascript.jsx': ['prettier'],
+      \   'json': ['prettier'],
+      \   'scss': ['prettier'],
+      \   'bash': ['shfmt'],
+      \   'zsh': ['shfmt'],
+      \   'elixir': ['mix_format'],
+      \   'ruby': ['standardrb'],
+      \   'rust': ['rustfmt'],
+      \   'elm': ['elm-format'],
+      \}
 
 let g:ale_fixers = {
       \   'typescript': ['prettier'],
@@ -19,12 +36,130 @@ let g:ale_fixers = {
       \   'bash': ['shfmt'],
       \   'zsh': ['shfmt'],
       \   'elixir': ['mix_format'],
-      \   'ruby': ['rubocop'],
+      \   'ruby': ['standardrb'],
       \   'rust': ['rustfmt'],
       \   'elm': ['elm-format'],
+      \   'terraform': ['terraform'],
       \}
+
+" set syntax correctly for JS land
+autocmd BufRead,BufNewFile *.ts set syntax=javascript
+autocmd BufRead,BufNewFile *.tsx set filetype=typescript.tsx
+autocmd BufRead,BufNewFile *.tsx set syntax=javascript.jsx
+
+let g:javascript_plugin_flow=1
+
+" use standardrb and not conflict with vim-ruby indentation
+let g:ruby_indent_assignment_style = 'variable'
 
 let g:ale_sh_shfmt_options = '-i 2 -ci'
 
 let g:ale_fix_on_save = 1
+let g:ale_lint_on_save = 0
 set spell spelllang=en_us
+" turn off at start, opt in before commit
+set nospell
+
+" Use The RipGrep
+let g:rg_highlight = 'true'
+let g:derive_root = 'true'
+nnoremap \ :Rg<SPACE>
+
+hi QuickFixLine ctermfg=242 ctermbg=0 guibg=DarkGrey
+hi SpellBad term=reverse ctermbg=5 gui=undercurl,bold guisp=Red
+hi SpellBad term=reverse ctermfg=0 ctermbg=5 gui=undercurl,bold guisp=Red guifg=Black
+hi SpellCap term=reverse ctermfg=0 ctermbg=12 gui=undercurl,bold guisp=Blue guifg=Black
+hi SpellRare term=reverse ctermfg=0 ctermbg=13 gui=undercurl,bold guisp=Magenta guifg=Black
+hi SpellLocal term=underline ctermfg=0 ctermbg=14 gui=undercurl,bold guisp=Cyan guifg=Black
+
+" Split edit your vimrc. Type space, v, r in sequence to trigger
+fun! OpenConfigFile(file)
+  if (&filetype ==? 'startify')
+    execute 'e ' . a:file
+  else
+    execute 'tabe ' . a:file
+  endif
+endfun
+nnoremap <silent> <leader>vr :call OpenConfigFile('~/.vimrc')<cr>
+nnoremap <silent> <leader>vb :call OpenConfigFile('~/.vimrc.bundles')<cr>
+
+
+" Source (reload) your vimrc. Type space, s, o in sequence to trigger
+nnoremap <leader>so :source $MYVIMRC<cr>
+
+" ====================================
+" COC
+" ====================================
+
+" Tell CoC where node is if it doesn't know
+" let current_node_path = trim(system('asdf where nodejs'))
+" let g:coc_node_path = current_node_path . '/bin/node'
+
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+augroup CocConfig
+  autocmd!
+  " coc-highlight: enable highlighting for symbol under cursor
+  autocmd CursorHold * silent call CocActionAsync('highlight')
+augroup END
+
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
+
+" set coc as nvim man page provider for functions
+" TODO: maybe need to check if coc is enabled for file and do setlocal?
+set keywordprg=:call\ CocAction('doHover')
+
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+
+" ====================================
+" Vista.vim
+" ====================================
+
+" use coc as backend
+let g:vista_default_executive = 'coc'
+
+let g:vista_finder_alternative_executives = ['ctags']
+
+" enable fzf preview
+set rtp+=/usr/local/opt/fzf
+let g:vista_fzf_preview = ['right:50%']
+
+" enable icons (must have patched fonts)
+let g:vista#renderer#enable_icon = 1
+
+" enable nicer indentation using patched fonts
+let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
+
+" how long before scrolling / floating the definition
+let g:vista_cursor_delay = 200
+
+" how to show the definition
+let g:vista_echo_cursor_strategy = 'floating_win'
+
+" update symbol list when text changed (really it should be on file saved or
+" different file opened)
+let g:vista_update_on_text_changed = 1
+
+
+" Load project specific vimrc {{{
+  if (getcwd() != expand('~')) && filereadable(getcwd() . '/.vimrc')
+    echom '-------------> loading project specific local vimrc'
+    set exrc
+    execute 'source ' . getcwd() . '/.vimrc'
+  endif
+" }}}
+
+" set fold options
+" set foldmethod=syntax

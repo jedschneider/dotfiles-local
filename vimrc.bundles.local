@@ -1,9 +1,15 @@
 Plug 'flazz/vim-colorschemes'
-" Silver Searcher Integration
-Plug 'rking/ag.vim'
+Plug 'jremmen/vim-ripgrep'
 Plug 'scrooloose/nerdtree'
 Plug 'hashivim/vim-terraform'
 Plug 'mattn/emmet-vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'ElmCast/elm-vim'
 Plug 'chrisbra/csv.vim'
+Plug 'vim-scripts/Align'
+Plug 'jsfaint/gen_tags.vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'liuchengxu/vista.vim'
+Plug 'junegunn/fzf'
+Plug 'dense-analysis/ale'
+Plug 'cespare/vim-toml'
