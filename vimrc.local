@@ -4,7 +4,8 @@ function! TrimWhiteSpace()
 endfunction
 autocmd BufWritePre     * :call TrimWhiteSpace()
 
-colorscheme solarized
+let base16colorspace=256
+colorscheme base16-default-dark
 
 let g:ale_pattern_options = {
                         \  '\.min\.js$': {'ale_linters': [], 'ale_fixers': []},
