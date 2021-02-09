@@ -4,8 +4,11 @@ function! TrimWhiteSpace()
 endfunction
 autocmd BufWritePre     * :call TrimWhiteSpace()
 
-let base16colorspace=256
-colorscheme base16-default-dark
+
+if filereadable(expand("~/.vimrc_background"))
+  let base16colorspace=256
+  source ~/.vimrc_background
+endif
 
 let g:ale_pattern_options = {
                         \  '\.min\.js$': {'ale_linters': [], 'ale_fixers': []},
@@ -22,6 +25,7 @@ let g:ale_linters = {
       \   'bash': ['shfmt'],
       \   'zsh': ['shfmt'],
       \   'elixir': ['mix_format'],
+      \   'markdown': ['prettier'],
       \   'ruby': ['standardrb'],
       \   'rust': ['rustfmt'],
       \   'elm': ['elm-format'],
@@ -58,9 +62,10 @@ let g:ale_sh_shfmt_options = '-i 2 -ci'
 let g:ale_fix_on_save = 1
 let g:ale_lint_on_save = 0
 set spell spelllang=en_us
-" turn off at start, opt in before commit
-set nospell
 
+" turn off at start, opt in before commit
+" set nospell
+:map <F5> :setlocal spell! spelllang=en_us<CR>
 " Use The RipGrep
 let g:rg_highlight = 'true'
 let g:derive_root = 'true'
@@ -164,3 +169,6 @@ let g:vista_update_on_text_changed = 1
 
 " set fold options
 " set foldmethod=syntax
+"
+let test#strategy = 'vtr'
+let gVtrOrientation = 'v'

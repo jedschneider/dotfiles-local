@@ -9,7 +9,7 @@
 [push]
   spgSign = if-asked
 [log]
-  showSignature = true
+  showSignature = false
 [filter "lfs"]
 	process = git-lfs filter-process
 	required = true

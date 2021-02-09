@@ -10,7 +10,10 @@ Plug 'vim-scripts/Align'
 Plug 'jsfaint/gen_tags.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'liuchengxu/vista.vim'
-Plug 'junegunn/fzf'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'dense-analysis/ale'
 Plug 'cespare/vim-toml'
 Plug 'chriskempson/base16-vim'
+Plug 'Soares/base16.nvim'
+Plug 'christoomey/vim-tmux-runner'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
